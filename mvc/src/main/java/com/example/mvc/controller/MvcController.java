@@ -1,6 +1,7 @@
 package com.example.mvc.controller;
 
 import com.example.mvc.model.Student;
+import com.example.mvc.service.LottoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +12,18 @@ import java.util.stream.Collectors;
 // MvcController => Controller
 @Controller
 public class MvcController {
+    // Service add
+    private LottoService lottoService;
 
     // Member Field
-    private int hitsCount = 0;
+    // private int hitsCount = 0; service 사용 전
     private int[] lottoArrays = new int[6];
     private List<String> historyList = new ArrayList<>();
+
+    // Constructor => LottoService 사용하기 위함
+    public MvcController(LottoService lottoService) {
+        this.lottoService = lottoService;
+    }
 
     // 실습1
     // hits method
@@ -25,7 +33,10 @@ public class MvcController {
 //        hitsCount++;
         // html 에게 hits를 전달시켜주는 역할
         // addAttributeName 이 html ${}에게 속성을 추가해서 addAttributeValue를 전달해준다고 생각하면 됨[++hitsCount]
-        model.addAttribute("hits", ++hitsCount);
+
+        // service 를 사용 후 동작
+        int hitsCount = lottoService.addHit();
+        model.addAttribute("hits", hitsCount);
         return "hits"; // hits.html file 을 return
     }
 
@@ -51,6 +62,39 @@ public class MvcController {
         return "lotto";
     }
 
+    // lotto2 method
+    @RequestMapping("/lotto2")
+    public String lotto2(Model model) {
+        // 6개의 임의의 숫자 만들기
+        List<Integer> lottoTwoArray = lottoService.nextWinningNumber();
+
+        model.addAttribute("lottoTwoArray", lottoTwoArray);
+
+        /*
+        for (int i = 0; i < 6; i++) {
+            // 임의 정수를 반호나하는 메서드
+            lottoTwoArray.add(random.nextInt(1, 46));
+        }
+         */
+
+        /*
+        List<String> lottoNumStrs = new ArrayList<>();
+
+        for (int i = 0; i < 6; i++) {
+            if (i == 5) {
+                lottoNumStrs.add(lottoTwoArray.get(i).toString());
+            } else {
+                lottoNumStrs.add(String.format("%d - ", lottoTwoArray.get(i)));
+            }
+        }
+
+        model.addAttribute("lottoTwoArray", lottoTwoArray);
+        model.addAttribute("lottoNumStrs", lottoNumStrs);
+         */
+
+        return "lotto2";
+    }
+
     // history method
     @RequestMapping("/history")
     public String history(Model model) {
@@ -70,7 +114,7 @@ public class MvcController {
         // html 에게 message를 전달시켜주는 역할
         // addAttributeName 이 html ${}에게 속성을 추가해서 addAttributeValue를 전달해준다고 생각하면 됨[message]
         model.addAttribute("message", "Hello, HTML!");
-        return "home"; // home.html file 을 return
+        return "home"; // main.html file 을 return
     }
 
     // student method
