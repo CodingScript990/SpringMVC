@@ -41,7 +41,8 @@ public class StudentController {
         return "redirect:/main";
     }
 
-    //
+    // GetMapping => domain ["main"]
+    // main method
     @GetMapping("/main")
     public String home(Model model) {
         model.addAttribute("studentList", studentService.readStudentAll());
