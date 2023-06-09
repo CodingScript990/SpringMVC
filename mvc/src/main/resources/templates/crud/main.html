@@ -14,8 +14,11 @@
   <div th:unless="${studentList.isEmpty()}"
        th:each="student: ${studentList}">
     <p>Number : [[${student.id}]]</p>
-    <p>Name : [[${student.name}]]</p>
+    <!-- 타임리프를 사용할때 좀더 편리하게 이용할 수 있도록 도움을 주는 것 : @{} -->
+    <!-- (id=${student.id})는 @{/{id}}에게 값을 부여하겠다는 의미임 -->
+    <p>Name : <a th:href="@{/main/{id} (id=${student.id})}">[[${student.name}]]</a></p>
     <p>Email : [[${student.email}]]</p>
+    <hr>
   </div>
   <a href="/create-view">Create</a>
 </body>

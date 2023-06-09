@@ -2,6 +2,7 @@ package com.example.mvc.crud.controller;
 
 import com.example.mvc.crud.model.StudentDto;
 import com.example.mvc.crud.service.StudentService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +55,7 @@ public class StudentController {
 
     // GetMapping => domain ["read"]
     // read method
-    @GetMapping("/{id}") // {} <= variable[id value를 변수로 설정하여 사용한다는 의미]
+    @GetMapping("/main/{id}") // {} <= variable[id value를 변수로 설정하여 사용한다는 의미]
     public String read(@PathVariable("id") Long id, Model model) {
 //        System.out.println(id);
 
@@ -65,4 +66,44 @@ public class StudentController {
 
         return "crud/read";
     }
+
+    // Update
+    // updateView method
+    @GetMapping("/main/{id}/update-view")
+    public String updateView(@PathVariable("id") Long id, Model model) { // id, model 받아오기
+        // student data를 부여함, service readStudent
+        model.addAttribute("student", studentService.readStudent(id));
+        return "crud/update"; // update html file 을 반환
+    }
+
+    // update method
+    @PostMapping("/main/{id}/update")
+    public String update(
+            @PathVariable("id") Long id,
+            @RequestParam("name") String name,
+            @RequestParam("email") String email) {
+        // service 활용
+        studentService.updateStudent(id, name, email);
+        // 상세보기 페이지로 redirect
+        return String.format("redirect:/main/%s", id);
+    }
+
+    // Delete
+    // DeleteView method
+    @GetMapping("/main/{id}/delete-view")
+    public String deleteView(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("student", studentService.readStudent(id));
+        return "crud/delete";
+    }
+
+    // Delete method
+    @PostMapping("/main/{id}/delete")
+    public String delete(@PathVariable("id") Long id) { // 필요한 인자는 id값
+        /**
+         * update 때는 data 가 남아있지만, delete 는 돌아갈 상세보기가 없기 때문에, 홈으로 돌아감
+         */
+        studentService.deleteStudent(id);
+        return "redirect:/main";
+    }
+
 }

@@ -8,5 +8,8 @@
   <h1>[[${student.id}]]. [[${student.name}]]</h1>
   <p>Email: [[${student.email}]]</p>
   <a href="/main">Back</a>
+<!-- /Pid}/update-view -->
+  <a th:href="@{/main/{id}/update-view (id=${student.id})}">Edit</a>
+  <a th:href="@{/main/{id}/delete-view (id=${student.id})}">Delete</a>
 </body>
 </html>
