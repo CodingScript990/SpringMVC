@@ -5,6 +5,7 @@ import com.example.mvc.crud.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -47,5 +48,21 @@ public class StudentController {
     public String home(Model model) {
         model.addAttribute("studentList", studentService.readStudentAll());
         return "crud/main";
+    }
+
+    // Read
+
+    // GetMapping => domain ["read"]
+    // read method
+    @GetMapping("/{id}") // {} <= variable[id value를 변수로 설정하여 사용한다는 의미]
+    public String read(@PathVariable("id") Long id, Model model) {
+//        System.out.println(id);
+
+        // id를 읽어오는 작업
+        studentService.readStudent(id);
+
+        model.addAttribute("student", studentService.readStudent(id));
+
+        return "crud/read";
     }
 }
