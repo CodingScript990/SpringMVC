@@ -19,10 +19,9 @@ public class PostfixCalculation {
         Stack<Integer> digitStack = new Stack<>();
 
         // for statement
-        char token = 0;
         for (int i = 0; i < input.length(); i++) {
             // token char type
-            token = input.charAt(i);
+            char token = input.charAt(i);
 
             // 1. 숫자라면, Stack 에 push 한다
             // Character.isDigit(token) // token 의 숫자가 표현된 글자인지 판단하는 Method
@@ -53,7 +52,8 @@ public class PostfixCalculation {
         // answer value => pop[Result Value == last value]
         int answer = digitStack.pop();
         // if statement => true 이면 answer
-        if(digitStack.empty()) System.out.println(answer);
+        if(digitStack.empty())
+            System.out.println(answer);
         // else statement => false 이면 error message
         else System.out.println("error");
     }

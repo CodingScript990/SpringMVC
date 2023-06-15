@@ -3,6 +3,7 @@ package com.example.mvc.algorithms.day3;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -28,31 +29,47 @@ public class DepthFirstSearch {
             edgeMap[leftNode][rightNode] = 1;
             edgeMap[rightNode][leftNode] = 1;
         }
-        
-        // 다음에 방문할 점들을 담아두는 Stack
+
+        // 다음에 방문할 점들을 담아두는 스택
         Stack<Integer> toVisit = new Stack<>();
-        
         // 방문을 기록하는 용도의 배열
         boolean[] visited = new boolean[maxNodes + 1];
+        // 여기부터 DFS
 
-        // DFS
+        // 방문 순서를 출력하는 문제라 가정
+        // T방문 순서를 담기위한 List
+        List<Integer> visitedOrder = new ArrayList<>();
 
-        // 첫 방문 대상 신청(1)
+        // 첫 방문 대상 선정 (1)
         int next = 1;
-        // 대상을 Stack push
+        // 대상을 스택에 push
         toVisit.push(next);
         // 스택이 빌때까지 반복하는 while
         while (!toVisit.empty()) {
-            // TODO 다음 방문할 곳을 가져온다
-            // TODO 이미 방문했다면 다음 곳으로 간다(pop)
-            // TODO 방문했다 표시한다
-            // TODO 요부분은 문제에 따라 다르다
-            // TODO 다음 방문 대상을 검색해서, 스택에 푸시 한다
-            for (;;) { // TODO 그래프에 존재하는 점들을 순회
-                // TODO 해당 장점에 도달할 수 있고, 아직 방문하지 않았다면
-                    // TODO 스택에 푸시
+            // 다음 방문할 곳을 가져온다. (pop)
+            next = toVisit.pop();
+
+            // 이미 방문했다면 다음곳으로 간다. (pop)
+            if (visited[next]) continue;
+
+            // 방문했다 표시한다.
+            visited[next] = true;
+
+            // 요부분은 문제에 따라 다르다.
+            visitedOrder.add(next);
+
+            // 다음 방문 대상을 검색해서, 스택에 푸시 한다.
+            // 더 작은 숫자부터 방문하려면 스택에 역순으로 넣는다.
+            for (int i = maxNodes; i > 0; i--) { // 그래프에 존재하는 정점들을 순회
+                // 해당 정점에 도달할 수 있고, 아직 방문하지 않았다면
+                if (edgeMap[next][i] == 1 && !visited[i]) {
+                    // 다음에 방문할 곳으로 스택에 푸시
+                    toVisit.push(i);
+                }
             }
         }
+        // 답을 출력한다.
+        System.out.println(visitedOrder);
     }
 
     public static void main(String[] args) throws IOException {
