@@ -1,4 +1,4 @@
-package com.example.mvc.algorithms.day3;
+package com.example.mvc.algorithms.postifix;
 
 import java.io.BufferedReader;
 import java.io.IOException;

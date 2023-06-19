@@ -1,4 +1,4 @@
-package com.example.mvc.algorithms.day1;
+package com.example.mvc.algorithms.sort;
 
 import java.util.Arrays;
 

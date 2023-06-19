@@ -1,4 +1,4 @@
-package com.example.mvc.algorithms.day2;
+package com.example.mvc.algorithms.stack;
 
 // Stack
 public class Stack {
