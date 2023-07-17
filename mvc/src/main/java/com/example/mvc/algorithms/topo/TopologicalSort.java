@@ -1,4 +1,4 @@
-package com.example.mvc.topo;
+package com.example.mvc.algorithms.topo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
